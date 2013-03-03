@@ -15,55 +15,55 @@ import com.jboss.forge.scaffold.vraptor.app.model.Customer;
 @Resource
 public class CustomerController {
 
-	private Session session;
-	private final Result result;
+   private Session session;
+   private final Result result;
 
-	public CustomerController(Session session, Result result) {
-		this.session = session;
-		this.result = result;
-	}
+   public CustomerController(Session session, Result result) {
+      this.session = session;
+      this.result = result;
+   }
 
-	@Get
-	public void search() {
-		result.include("customers", session.createCriteria(Customer.class).list());
-	}
+   @Get
+   public void search() {
+      result.include("customers", session.createCriteria(Customer.class).list());
+   }
 
-	@Post
-	public void search(Customer customer) {
+   @Post
+   public void search(Customer customer) {
 
-		Criteria criteria = session.createCriteria(Customer.class);
-		if (customer.getFirstName() != null && !"".equals(customer.getFirstName())) {
-			criteria.add(Restrictions.like("firstName", "%" + customer.getFirstName() + "%"));
-		}
-		if (customer.getLastName() != null && !"".equals(customer.getLastName())) {
-			criteria.add(Restrictions.like("lastName", "%" + customer.getLastName() + "%"));
-		}
-		result.include("customers", criteria.list());
-	}
+      Criteria criteria = session.createCriteria(Customer.class);
+      if (customer.getFirstName() != null && !"".equals(customer.getFirstName())) {
+         criteria.add(Restrictions.like("firstName", "%" + customer.getFirstName() + "%"));
+      }
+      if (customer.getLastName() != null && !"".equals(customer.getLastName())) {
+         criteria.add(Restrictions.like("lastName", "%" + customer.getLastName() + "%"));
+      }
+      result.include("customers", criteria.list());
+   }
 
-	public void create() {
-	}
+   public void create() {
+   }
 
-	@Path("/customer/view/{customer.id}")
-	@Get
-	public void view(Customer customer) {
-		result.include("customer", session.load(Customer.class, customer.getId()));
-	}
+   @Path("/customer/view/{customer.id}")
+   @Get
+   public void view(Customer customer) {
+      result.include("customer", session.load(Customer.class, customer.getId()));
+   }
 
-	@Path("/customer/edit/{customer.id}")
-	@Get
-	public void edit(Customer customer) {
-		result.include("customer", session.load(Customer.class, customer.getId()));
-	}
+   @Path("/customer/edit/{customer.id}")
+   @Get
+   public void edit(Customer customer) {
+      result.include("customer", session.load(Customer.class, customer.getId()));
+   }
 
-	public void save(Customer customer) {
+   public void save(Customer customer) {
 
-		if (customer.getId() == null) {
-			session.persist(customer);
-		} else {
-			session.merge(customer);
-		}
+      if (customer.getId() == null) {
+         session.persist(customer);
+      } else {
+         session.merge(customer);
+      }
 
-		result.redirectTo(CustomerController.class).search();
-	}
+      result.redirectTo(CustomerController.class).search();
+   }
 }
