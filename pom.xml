@@ -40,7 +40,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>forge-scaffold-vraptor-app</finalName>
+        <finalName>forge-vraptor-plugin-example-app</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
