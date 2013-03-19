@@ -11,5 +11,5 @@
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
         </properties>
-    </persistence-unit>    
+    </persistence-unit>
 </persistence>
