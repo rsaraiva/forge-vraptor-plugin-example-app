@@ -12,6 +12,6 @@ public class EntityManagerProvider extends SpringProvider {
     protected void registerCustomComponents(ComponentRegistry registry) {
         registry.register(EntityManagerCreator.class, EntityManagerCreator.class);
         registry.register(EntityManagerFactoryCreator.class, EntityManagerFactoryCreator.class);
-        //registry.register(JPATransactionInterceptor.class, JPATransactionInterceptor.class);
+        registry.register(JPATransactionInterceptor.class, JPATransactionInterceptor.class);
     }
 }
