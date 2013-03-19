@@ -38,11 +38,6 @@
             <artifactId>hsqldb</artifactId>
             <version>1.8.0.10</version>
         </dependency>
-<!--        <dependency> for as7
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.3.161</version>
-        </dependency>-->
     </dependencies>
     <build>
         <finalName>forge-scaffold-vraptor-app</finalName>

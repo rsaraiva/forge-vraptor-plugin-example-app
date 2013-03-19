@@ -61,13 +61,16 @@ public class CustomerController {
     }
 
     public void save(Customer customer) {
-
         if (customer.getId() == null) {
             entityManager.persist(customer);
         } else {
             entityManager.merge(customer);
         }
-
+        result.redirectTo(CustomerController.class).search();
+    }
+    
+    public void delete(Customer customer) {
+        entityManager.remove(entityManager.find(Customer.class, customer.getId()));
         result.redirectTo(CustomerController.class).search();
     }
 }

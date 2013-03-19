@@ -21,7 +21,8 @@
       </table>
       <span class="buttons">
          <a href="#" onclick="document.edit.submit()" class="btn btn-primary">Save</a>
-         <a href="<c:url value="/customer/search"/>" class="btn btn-primary">Cancel</a>
+         <a href="<c:url value='/customer/search'/>" class="btn btn-primary">Cancel</a>
+         <a href="#" onclick="document.edit.action='<c:url value="/customer/delete"/>';document.edit.submit()" class="btn btn-primary">Delete</a>
       </span>
    </form>
 
