@@ -6,9 +6,13 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import com.jboss.forge.scaffold.vraptor.app.model.Customer;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 @Resource
@@ -26,23 +30,31 @@ public class CustomerController {
     public void search() {
         result.include("customers", entityManager.createQuery("from Customer c").getResultList());
     }
+    
+    private Predicate[] getSearchPredicates(Root<Customer> root, Customer example) {
+
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        List<Predicate> predicatesList = new ArrayList<Predicate>();
+        
+        String firstName = example.getFirstName();
+        if (firstName != null && !"".equals(firstName)) { 
+            predicatesList.add(builder.like(root.<String>get("firstName"), '%' + firstName + '%')); 
+        }
+        String lastName = example.getLastName();
+        if (lastName != null && !"".equals(lastName)) { 
+            predicatesList.add(builder.like(root.<String>get("lastName"), '%' + lastName + '%')); 
+        }
+
+        return predicatesList.toArray(new Predicate[predicatesList.size()]);
+    }
 
     @Post
     public void search(Customer customer) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Customer> query = builder.createQuery(Customer.class);
-        Root<Customer> from = query.from(Customer.class);
-        CriteriaQuery<Customer> select = query.select(from);
-        
-        if (customer.getFirstName() != null && !"".equals(customer.getFirstName())) {
-            query.where(builder.like(from.<String>get("firstName"), "%" + customer.getFirstName() + "%"));
-        }
-
-        if (customer.getLastName() != null && !"".equals(customer.getLastName())) {
-            query.where(builder.like(from.<String>get("lastName"), "%" + customer.getLastName() + "%"));
-        }
-        
-        result.include("customers", entityManager.createQuery(select).getResultList());
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Customer> criteria = builder.createQuery(Customer.class);
+        Root<Customer> root = criteria.from(Customer.class);
+        TypedQuery<Customer> query = this.entityManager.createQuery(criteria.select(root).where(getSearchPredicates(root, customer)));
+        result.include("customers", query.getResultList());
     }
 
     public void create() {
