@@ -29,6 +29,8 @@
             alt="Forge... get hammered" border="0" />
          </a>
          <ul>
+            <li><a href="<c:url value="/category/search"/>">Category</a></li>
+            <li><a href="<c:url value="/product/search"/>">Product</a></li>
             <li><a href="<c:url value="/customer/search"/>">Customer</a></li>
          </ul>
       </div>

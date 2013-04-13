@@ -35,6 +35,9 @@
         <description>Forge Persistence Unit</description>
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <non-jta-data-source>java:jboss/datasources/ExampleDS</non-jta-data-source>
+        <class>com.jboss.forge.scaffold.vraptor.app.model.Product</class>
+        <class>com.jboss.forge.scaffold.vraptor.app.model.Category</class>
+        <class>com.jboss.forge.scaffold.vraptor.app.model.Customer</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
